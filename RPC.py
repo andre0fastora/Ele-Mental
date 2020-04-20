@@ -49,6 +49,14 @@ def main():
     aiHpText = statFont.render("Enemy HP: "+str(ai_HP), True, WHITE, BLACK)
     aiCpText = statFont.render("Enemy CP: "+str(ai_combo), True, WHITE, BLACK)
 
+    winText1 = statFont.render("FIRE BEATS GRASS!", True, WHITE, BLACK)
+    winText2 = statFont.render("GRASS BEATS WATER!", True, WHITE, BLACK)
+    winText3 = statFont.render("WATER BEATS FIRE!", True, WHITE, BLACK)
+    winText4 = statFont.render("Tie!", True, WHITE, BLACK)
+    winText5 = statFont.render("Player Wins!!", True, WHITE, BLACK)
+    winText6 = statFont.render("Player Loses!", True, WHITE, BLACK)
+    
+
     tutTextRect1 = tutText1.get_rect()
     tutTextRect1.center = (600, 25)
 
@@ -75,14 +83,28 @@ def main():
 
     promptTextRect = promptText.get_rect()
     promptTextRect.center = (600, 50)
-    #intro
-    print("Welcome to Ele-mental!\n")
-    print("You are a mage capeable of bending the elements to your will. Mages of this type are called Weavers and battle in the Elemental Pits for the enjoyment of the masses. \n")
-    print("At the begining of each round you and your opponent will choose an element (either FIRE, WATER, or GRASS) and sqaure off. FIRE beats GRASS, GRASS beats WATER, and WATER beats FIRE.")
-    print("You both start at 100HP. The winner of a round deals damage to the other Weaver and gains a combo point. The damage dealt is equal to 10hp multiplied by how many combo points you have. If you lose a round your combo points get set back to zero.\n")
 
-    p_name = "Jessie"
-    ai_name = "Lud"
+    winTextRect1 = winText1.get_rect()
+    winTextRect1.center = (500, 100)
+
+    winTextRect2 = winText2.get_rect()
+    winTextRect2.center = (500, 100)
+
+    winTextRect3 = winText3.get_rect()
+    winTextRect3.center = (500, 100)
+
+    winTextRect4 = winText4.get_rect()
+    winTextRect4.center = (500, 100)
+
+    winTextRect5 = winText5.get_rect()
+    winTextRect5.center = (500, 200)
+
+    winTextRect6 = winText6.get_rect()
+    winTextRect6.center = (500, 200)
+    
+   
+
+  
 
     #Title loop
     while True:
@@ -169,6 +191,8 @@ def main():
                 elif ai_choiceN == 3:
                     ai_choice = "WATER"
                     ai_Img = waterImg
+
+                windowSurface.fill(BLACK)
                     
                 #debug
                 #print("AI int = " + str(ai_choiceN)+ " P int = " + str(p_choiceN) + " AI str = " + ai_choice + " P Str = " + p_choice+"\n\n")
@@ -177,45 +201,45 @@ def main():
                 #player chooses fire
                 if p_choiceN== 1:
                     if ai_choiceN == 1:
-                        print("Fire clashes with fire! Neither Weaver gains ground!\n\n")
+                        windowSurface.blit(winText4, winTextRect4)
                     elif ai_choiceN == 2:
-                        print(str(p_name) + " lashes out with hot fire and incinerates the vines "+ai_name+" had summoned!\n\n")
+                        windowSurface.blit(winText1, winTextRect1)
                         p_combo += 1
                         ai_HP -= (10*p_combo)
                         ai_combo = 0
                     elif ai_choiceN == 3:
-                        print(str(p_name) + " gets a facefull of steam as their fire is extinguished by "+ai_name+"'s water!!\n\n")
+                        windowSurface.blit(winText3, winTextRect3)
                         ai_combo += 1
                         p_HP -= (10*ai_combo)
                         p_combo = 0
                 #player chooses grass
                 if p_choiceN== 2:
                     if ai_choiceN == 1:
-                        print(p_name+ " gets burned! Their vine attack destroyed by "+ai_name+"'s fire!\n\n")
+                        windowSurface.blit(winText1, winTextRect1)
                         ai_combo += 1
                         p_HP -= (10*ai_combo)
                         p_combo = 0 
                     elif ai_choiceN == 2:
-                        print("Plants clashes with plants! Neither Weaver gains ground!\n\n")
+                         windowSurface.blit(winText4, winTextRect4)
                     elif ai_choiceN == 3:
-                        print(str(p_name) + " whips through "+ai_name+"'s water with a swift vine attack!\n\n")
+                        windowSurface.blit(winText2, winTextRect2)
                         p_combo += 1
                         ai_HP -= (10*p_combo)
                         ai_combo = 0
                         #player chooses water
                 if p_choiceN== 3:
                     if ai_choiceN == 1:
-                        print(p_name+ " washes away their enemies fire attack leaving "+ai_name+" all washed up\n\n")
+                        windowSurface.blit(winText3, winTextRect3)
                         p_combo += 1
                         ai_HP -= (10*p_combo)
                         ai_combo = 0  
                     elif ai_choiceN == 2:
-                        print(p_name+" gets a quick thump on the head from "+ai_name+"'s vine attack!\n\n")
+                        windowSurface.blit(winText2, winTextRect2)
                         ai_combo += 1
                         p_HP -= (10*ai_combo)
                         p_combo = 0
                     elif ai_choiceN == 3:
-                        print("Water clashes with water! Neither Weaver gain ground\n\n")
+                        windowSurface.blit(winText4, winTextRect4)
 
                 if p_HP < 0:
                     p_HP = 0
@@ -228,7 +252,7 @@ def main():
                 aiCpText = statFont.render("Enemy CP: "+str(ai_combo), True, WHITE, BLACK)
 
 
-                windowSurface.fill(BLACK)
+                
 
                 windowSurface.blit(p_img,(300, 600))
                 windowSurface.blit(ai_Img,(600, 600))
@@ -240,11 +264,11 @@ def main():
                 
 
                 if p_HP <= 0:
-                    print(p_name + " is down and out! "+ai_name+" wins!\n\n")
+                    windowSurface.blit(winText6, winTextRect6)
                     done = 1
                 if ai_HP <= 0:
-                    print(ai_name + " is down and out! "+p_name+" wins!\n\n")
-                    done = 1
+                   windowSurface.blit(winText5, winTextRect5)
+                   done = 1
                 
                     
             
